@@ -1,20 +1,34 @@
 package main.java.app;
 
 
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 
 public class Main {
 
     public static void main(String[] args) {
 
-        String s1 = "{[()]}";
-        String s2 = "()";
-        String s3 = "(){[()]}()";
-        String s4 = "(){[()][}]";
-        String s5 = "()(){}[]{{}}()(({[]}))";
+        Scanner input = new Scanner(System.in);
+        String fileName = input.nextLine();
 
-        String s6 = "()((([])()(){}[]{{}}()(({[]}))"; // false
-        String s7 = "()())(";
+        String bracketSeq;
 
-        System.out.println(BracketsChecker.isCorrectBracketSeq(s7));
+        try {
+
+            bracketSeq = FileUtils.getTextFromFile(fileName);
+            Boolean answer = BracketsChecker.isCorrectBracketSeq(bracketSeq);
+            FileUtils.writeToFile(fileName, answer + "");
+
+            System.out.println(answer);
+
+        } catch (FileNotFoundException e) {
+            FileUtils.writeExceptionToLog(e);
+            System.out.println("Нет такого файла");
+        }
+
+
+
+
     }
 }
